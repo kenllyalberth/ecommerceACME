@@ -1,0 +1,42 @@
+// Definición de Contexto Principal para el Sistema de Ecommerce
+ContextMap AcmeEcommerceMap{
+    contains GestionOrdenesContext
+    contains GestionEnviosContext
+    contains GestionClientesContext
+    contains GestionPagosContext
+    contains GestionAutorizacionAutenticacionContext
+    contains CatalogProductosContext
+
+    /* Cooperación */
+    GestionClientesContext [P]<->[P] GestionEnviosContext
+
+    GestionOrdenesContext [P]<->[P] GestionClientesContext
+
+    GestionOrdenesContext [P]<->[P] GestionPagosContext
+
+    /* Conformista */
+    GestionClientesContext [CF]<-[PL] GestionAutorizacionAutenticacionContext
+
+    /* Anti-corruption layer */
+    /* Open-Host service */
+    CatalogProductosContext [U, OHS]->[D] GestionOrdenesContext
+}
+
+BoundedContext GestionOrdenesContext {
+}
+
+BoundedContext GestionEnviosContext {
+}
+
+BoundedContext GestionClientesContext {
+}
+
+BoundedContext GestionPagosContext {
+}
+
+BoundedContext GestionAutorizacionAutenticacionContext {
+}
+
+BoundedContext CatalogProductosContext {
+}
+
